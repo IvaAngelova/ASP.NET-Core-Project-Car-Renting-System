@@ -50,7 +50,26 @@ namespace CarRentingSystem.Controllers
             this.context.Cars.Add(carData);
             this.context.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult All()
+        {
+            var cars = this.context
+                .Cars
+                .OrderByDescending(c => c.Id)
+                .Select(c => new CarListingViewModel
+                {
+                    Id = c.Id,
+                    Brand = c.Brand,
+                    Model = c.Model,
+                    Year = c.Year,
+                    ImageUrl = c.ImageUrl,
+                    Category = c.Category.Name
+                })
+                .ToList();
+
+            return View(cars);
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()
