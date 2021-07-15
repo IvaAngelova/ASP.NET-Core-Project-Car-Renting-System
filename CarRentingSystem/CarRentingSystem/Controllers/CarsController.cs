@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-using CarRentingSystem.Models.Cars;
-using System.Collections.Generic;
-using CarRentingSystem.Data;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Mvc;
+
+using CarRentingSystem.Data;
 using CarRentingSystem.Data.Models;
+using CarRentingSystem.Models.Cars;
 
 namespace CarRentingSystem.Controllers
 {
@@ -25,7 +27,7 @@ namespace CarRentingSystem.Controllers
         [HttpPost]
         public IActionResult Add(AddCarFormModel car)
         {
-            if (!this.context.Categories.Any(c=>c.Id == car.CategoryId))
+            if (!this.context.Categories.Any(c => c.Id == car.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(car.CategoryId), "Category does not exist.");
             }
@@ -53,10 +55,21 @@ namespace CarRentingSystem.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All()
+        public IActionResult All(string searchTerm)
         {
-            var cars = this.context
+            var carQuery = this.context
                 .Cars
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                carQuery = carQuery
+                    .Where(c => 
+                    (c.Brand + " " + c.Model).ToLower().Contains(searchTerm.ToLower())
+                    || c.Description.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var cars = carQuery
                 .OrderByDescending(c => c.Id)
                 .Select(c => new CarListingViewModel
                 {
@@ -69,7 +82,11 @@ namespace CarRentingSystem.Controllers
                 })
                 .ToList();
 
-            return View(cars);
+            return View(new AllCarsQueryModel
+            {
+                Cars = cars,
+                SearchTerm = searchTerm
+            });
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()
