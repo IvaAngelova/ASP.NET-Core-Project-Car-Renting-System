@@ -5,15 +5,19 @@ namespace CarRentingSystem.Models.Cars
 {
     public class AllCarsQueryModel
     {
+        public const int CarsPerPage = 3;
+
         public string Brand { get; init; }
 
-        public IEnumerable<string> Brands { get; init; }
-
-        [Display(Name = "Search by text:")]
+        [Display(Name = "Search by text")]
         public string SearchTerm { get; init; }
 
         public CarSorting Sorting { get; init; }
 
-        public IEnumerable<CarListingViewModel> Cars { get; init; }
+        public int CurrentPage { get; set; }
+
+        public IEnumerable<string> Brands { get; set; }
+
+        public IEnumerable<CarListingViewModel> Cars { get; set; }
     }
 }

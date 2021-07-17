@@ -55,28 +55,38 @@ namespace CarRentingSystem.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string brand, string searchTerm)
+        public IActionResult All([FromQuery]AllCarsQueryModel query)
         {
             var carQuery = this.context
                 .Cars
                 .AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(brand))
+            if (!string.IsNullOrWhiteSpace(query.Brand))
             {
                 carQuery = carQuery
-                    .Where(c => c.Brand == brand);
+                    .Where(c => c.Brand ==query.Brand);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 carQuery = carQuery
                     .Where(c =>
-                    (c.Brand + " " + c.Model).ToLower().Contains(searchTerm.ToLower())
-                    || c.Description.ToLower().Contains(searchTerm.ToLower()));
+                    (c.Brand + " " + c.Model).ToLower().Contains(query.SearchTerm.ToLower())
+                    || c.Description.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            carQuery = query.Sorting switch
+            {
+                CarSorting.Year => carQuery
+                                            .OrderByDescending(c=>c.Year),
+                CarSorting.BrandAndModel => carQuery
+                                            .OrderByDescending(c=>c.Brand)
+                                            .ThenBy(c=>c.Model),
+                CarSorting.DateCreated or _=> carQuery
+                                            .OrderByDescending(c=>c.Id)
+            };
+
             var cars = carQuery
-                .OrderByDescending(c => c.Id)
                 .Select(c => new CarListingViewModel
                 {
                     Id = c.Id,
@@ -95,12 +105,10 @@ namespace CarRentingSystem.Controllers
                 .Distinct()
                 .ToArray();
 
-            return View(new AllCarsQueryModel
-            {
-                Brands = carBrands,
-                Cars = cars,
-                SearchTerm = searchTerm
-            });
+            query.Brands = carBrands;
+            query.Cars = cars;
+
+            return View(query);
         }
 
         private IEnumerable<CarCategoryViewModel> GetCarCategories()
