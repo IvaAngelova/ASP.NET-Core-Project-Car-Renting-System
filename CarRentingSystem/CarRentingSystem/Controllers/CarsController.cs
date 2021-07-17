@@ -55,16 +55,22 @@ namespace CarRentingSystem.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All(string searchTerm)
+        public IActionResult All(string brand, string searchTerm)
         {
             var carQuery = this.context
                 .Cars
                 .AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(brand))
+            {
+                carQuery = carQuery
+                    .Where(c => c.Brand == brand);
+            }
+
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 carQuery = carQuery
-                    .Where(c => 
+                    .Where(c =>
                     (c.Brand + " " + c.Model).ToLower().Contains(searchTerm.ToLower())
                     || c.Description.ToLower().Contains(searchTerm.ToLower()));
             }
@@ -82,8 +88,16 @@ namespace CarRentingSystem.Controllers
                 })
                 .ToList();
 
+            var carBrands = this.context
+                .Cars
+                .Select(br => br.Brand)
+                .OrderBy(br => br)
+                .Distinct()
+                .ToArray();
+
             return View(new AllCarsQueryModel
             {
+                Brands = carBrands,
                 Cars = cars,
                 SearchTerm = searchTerm
             });

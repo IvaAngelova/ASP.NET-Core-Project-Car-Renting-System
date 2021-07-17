@@ -5,6 +5,8 @@ namespace CarRentingSystem.Models.Cars
 {
     public class AllCarsQueryModel
     {
+        public string Brand { get; init; }
+
         public IEnumerable<string> Brands { get; init; }
 
         [Display(Name = "Search by text:")]
