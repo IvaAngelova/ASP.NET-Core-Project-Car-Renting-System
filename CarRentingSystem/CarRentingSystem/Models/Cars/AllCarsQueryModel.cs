@@ -14,7 +14,9 @@ namespace CarRentingSystem.Models.Cars
 
         public CarSorting Sorting { get; init; }
 
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; init; } = 1;
+
+        public int TotalCars { get; set; }
 
         public IEnumerable<string> Brands { get; set; }
 

@@ -1,5 +1,8 @@
 ﻿@model AllCarsQueryModel
 
+@{
+    ViewData["Title"] = "All Cars";
+}
 
 <form method="get">
     <div class="row mb-5">
@@ -33,7 +36,6 @@
     <input type="submit" class="btn btn-primary d-none">
 </form>
 
-
 <div class="row">
     @foreach (var car in Model.Cars)
     {
@@ -48,3 +50,37 @@
         </div>
     }
 </div>
+
+@{
+    var previousPage = Model.CurrentPage - 1;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalCars / AllCarsQueryModel.CarsPerPage);
+}
+
+<div class="row mb-5">
+    <div class="col-md-4">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="Cars"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-brand="@Model.Brand"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">Previous</a>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+           asp-controller="Cars"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-brand="@Model.Brand"
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-sorting="@((int)Model.Sorting)">Next</a>
+    </div>
+</div>
+

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
@@ -86,7 +85,11 @@ namespace CarRentingSystem.Controllers
                                             .OrderByDescending(c=>c.Id)
             };
 
+            var totalCars = carQuery.Count();
+
             var cars = carQuery
+                .Skip((query.CurrentPage - 1) * AllCarsQueryModel.CarsPerPage)
+                .Take(AllCarsQueryModel.CarsPerPage)
                 .Select(c => new CarListingViewModel
                 {
                     Id = c.Id,
@@ -105,6 +108,7 @@ namespace CarRentingSystem.Controllers
                 .Distinct()
                 .ToArray();
 
+            query.TotalCars = totalCars;
             query.Brands = carBrands;
             query.Cars = cars;
 
