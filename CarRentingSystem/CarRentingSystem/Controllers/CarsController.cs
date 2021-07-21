@@ -5,23 +5,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using CarRentingSystem.Data;
-using CarRentingSystem.Models.Cars;
 using CarRentingSystem.Data.Models;
+using CarRentingSystem.Models.Cars;
+using CarRentingSystem.Services.Cars;
 using CarRentingSystem.Infrastructure;
 
 namespace CarRentingSystem.Controllers
 {
     public class CarsController : Controller
     {
+        private readonly ICarService cars;
         private readonly CarRentingDbContext context;
 
-        public CarsController(CarRentingDbContext context)
+        public CarsController(ICarService cars, CarRentingDbContext context)
         {
+            this.cars = cars;
             this.context = context;
         }
 
         [Authorize]
-        public IActionResult Add() 
+        public IActionResult Add()
         {
             if (!this.UserIsDealer())
             {
@@ -78,63 +81,20 @@ namespace CarRentingSystem.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All([FromQuery]AllCarsQueryModel query)
+        public IActionResult All([FromQuery] AllCarsQueryModel query)
         {
-            var carQuery = this.context
-                .Cars
-                .AsQueryable();
+            var queryResult = this.cars.All(
+               query.Brand,
+               query.SearchTerm,
+               query.Sorting,
+               query.CurrentPage,
+               AllCarsQueryModel.CarsPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.Brand))
-            {
-                carQuery = carQuery
-                    .Where(c => c.Brand ==query.Brand);
-            }
+            var carBrands = this.cars.AllCarBrands();
 
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                carQuery = carQuery
-                    .Where(c =>
-                    (c.Brand + " " + c.Model).ToLower().Contains(query.SearchTerm.ToLower())
-                    || c.Description.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            carQuery = query.Sorting switch
-            {
-                CarSorting.Year => carQuery
-                                            .OrderByDescending(c=>c.Year),
-                CarSorting.BrandAndModel => carQuery
-                                            .OrderByDescending(c=>c.Brand)
-                                            .ThenBy(c=>c.Model),
-                CarSorting.DateCreated or _=> carQuery
-                                            .OrderByDescending(c=>c.Id)
-            };
-
-            var totalCars = carQuery.Count();
-
-            var cars = carQuery
-                .Skip((query.CurrentPage - 1) * AllCarsQueryModel.CarsPerPage)
-                .Take(AllCarsQueryModel.CarsPerPage)
-                .Select(c => new CarListingViewModel
-                {
-                    Id = c.Id,
-                    Brand = c.Brand,
-                    Model = c.Model,
-                    Year = c.Year,
-                    ImageUrl = c.ImageUrl,
-                    Category = c.Category.Name
-                })
-                .ToList();
-
-            var carBrands = this.context
-                .Cars
-                .Select(br => br.Brand)
-                .OrderBy(br => br)
-                .Distinct()
-                .ToArray();
-
-            query.TotalCars = totalCars;
             query.Brands = carBrands;
-            query.Cars = cars;
+            query.TotalCars = queryResult.TotalCars;
+            query.Cars = queryResult.Cars;
 
             return View(query);
         }

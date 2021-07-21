@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using CarRentingSystem.Data;
 using CarRentingSystem.Infrastructure;
+using CarRentingSystem.Services.Statistics;
+using CarRentingSystem.Services.Cars;
 
 namespace CarRentingSystem
 {
@@ -36,6 +38,9 @@ namespace CarRentingSystem
                 .AddEntityFrameworkStores<CarRentingDbContext>();
 
             services.AddControllersWithViews();
+
+            services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<ICarService, CarService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

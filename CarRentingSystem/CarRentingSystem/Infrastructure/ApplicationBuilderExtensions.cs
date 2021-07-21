@@ -9,7 +9,7 @@ using CarRentingSystem.Data.Models;
 
 namespace CarRentingSystem.Infrastructure
 {
-    public static class ApplicationBuilderExteensions
+    public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(
            this IApplicationBuilder app)
