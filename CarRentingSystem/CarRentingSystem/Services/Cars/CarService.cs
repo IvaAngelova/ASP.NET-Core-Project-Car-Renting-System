@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 using CarRentingSystem.Data;
 using CarRentingSystem.Models;
+using CarRentingSystem.Data.Models;
 
 namespace CarRentingSystem.Services.Cars
 {
@@ -50,19 +51,9 @@ namespace CarRentingSystem.Services.Cars
 
             var totalCars = carQuery.Count();
 
-            var cars = carQuery
+            var cars = GetCars(carQuery
                 .Skip((currentPage - 1) * carsPerPage)
-                .Take(carsPerPage)
-                .Select(c => new CarServiceModel
-                {
-                    Id = c.Id,
-                    Brand = c.Brand,
-                    Model = c.Model,
-                    Year = c.Year,
-                    ImageUrl = c.ImageUrl,
-                    Category = c.Category.Name
-                })
-                .ToList();
+                .Take(carsPerPage));
 
             return new CarQueryServiceModel
             {
@@ -73,12 +64,112 @@ namespace CarRentingSystem.Services.Cars
             };
         }
 
-        public IEnumerable<string> AllCarBrands() => 
-            this.context
+        public CarDetailsServiceModel Details(int carId)
+            => this.context
+                   .Cars
+                   .Where(c => c.Id == carId)
+                   .Select(c => new CarDetailsServiceModel
+                   {
+                       Id = c.Id,
+                       Brand = c.Brand,
+                       Model = c.Model,
+                       Description = c.Description,
+                       Year = c.Year,
+                       ImageUrl = c.ImageUrl,
+                       CategoryName = c.Category.Name,
+                       DealerId = c.DealerId,
+                       DealerName = c.Dealer.Name,
+                       UserId = c.Dealer.UserId
+                   })
+                   .FirstOrDefault();
+
+        public int Create(string brand, string model,
+                string description, string imageUrl,
+                int year, int categoryId, int dealerId)
+        {
+            var carData = new Car
+            {
+                Brand = brand,
+                Model = model,
+                Description = description,
+                ImageUrl = imageUrl,
+                Year = year,
+                CategoryId = categoryId,
+                DealerId = dealerId
+            };
+
+            this.context.Cars.Add(carData);
+            this.context.SaveChanges();
+
+            return carData.Id;
+        }
+
+        public bool Edit(int carId, string brand, string model,
+            string description, string imageUrl, int year,
+            int categoryId)
+        {
+            var carData = this.context.Cars.Find(carId);
+
+            if (carData == null)
+            {
+                return false;
+            }
+
+            carData.Brand = brand;
+            carData.Model = model;
+            carData.Description = description;
+            carData.ImageUrl = imageUrl;
+            carData.Year = year;
+            carData.CategoryId = categoryId;
+
+            this.context.SaveChanges();
+
+            return true;
+        }
+
+        public IEnumerable<CarServiceModel> ByUser(string userId)
+            => GetCars(this.context
                 .Cars
-                .Select(br => br.Brand)
-                .OrderBy(br => br)
-                .Distinct()
-                .ToArray();
+                .Where(c => c.Dealer.UserId == userId));
+
+        public bool IsByDealer(int carId, int dealerId)
+            => this.context
+                   .Cars
+                   .Any(c => c.Id == carId && c.DealerId == dealerId);
+
+        public IEnumerable<string> AllBrands()
+           => this.context
+                  .Cars
+                  .Select(br => br.Brand)
+                  .OrderBy(br => br)
+                  .Distinct()
+                  .ToArray();
+
+        public IEnumerable<CarCategoryServiceModel> AllCategories()
+        => this.context
+                    .Categories
+                    .Select(c => new CarCategoryServiceModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name
+                    })
+                    .ToList();
+
+        public bool CategoryExists(int categoryId)
+            => this.context
+                   .Categories
+                   .Any(c => c.Id == categoryId);
+
+        private static IEnumerable<CarServiceModel> GetCars(IQueryable<Car> carsQuery)
+            => carsQuery.Select(c => new CarServiceModel
+            {
+                Id = c.Id,
+                Brand = c.Brand,
+                Model = c.Model,
+                Year = c.Year,
+                ImageUrl = c.ImageUrl,
+                CategoryName = c.Category.Name
+            })
+                        .ToList();
     }
 }
