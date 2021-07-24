@@ -15,7 +15,6 @@
 
         public class Category
         {
-
             public const int NameMaxLength = 25;
         }
 
@@ -25,6 +24,12 @@
             public const int NameMaxLength = 25;
             public const int PhoneNumberMinLenght = 6;
             public const int PhoneNumberMaxLenght = 30;
+        }
+
+        public class User
+        {
+            public const int FullNameMinLength = 5;
+            public const int FullNameMaxLength = 40;
         }
     }
 }

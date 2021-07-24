@@ -2,16 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using CarRentingSystem.Data;
+using CarRentingSystem.Data.Models;
 using CarRentingSystem.Services.Cars;
 using CarRentingSystem.Infrastructure;
-using CarRentingSystem.Services.Statistics;
 using CarRentingSystem.Services.Dealers;
+using CarRentingSystem.Services.Statistics;
 
 namespace CarRentingSystem
 {
@@ -30,13 +31,14 @@ namespace CarRentingSystem
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CarRentingDbContext>();
 
             services.AddControllersWithViews(options =>

@@ -6,6 +6,8 @@ using CarRentingSystem.Services.Cars;
 using CarRentingSystem.Infrastructure;
 using CarRentingSystem.Services.Dealers;
 
+using static CarRentingSystem.WebConstants;
+
 namespace CarRentingSystem.Controllers
 {
     public class CarsController : Controller
@@ -94,14 +96,14 @@ namespace CarRentingSystem.Controllers
         {
             var userId = this.User.Id();
 
-            if (!this.dealers.IsDealer(userId))
+            if (!this.dealers.IsDealer(userId) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
 
             var car = this.cars.Details(id);
 
-            if (car.UserId != userId)
+            if (car.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -124,7 +126,7 @@ namespace CarRentingSystem.Controllers
         {
             var dealerId = this.dealers.IdByUser(this.User.Id());
 
-            if (dealerId == 0)
+            if (dealerId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(DealersController.Become), "Dealers");
             }
@@ -141,7 +143,7 @@ namespace CarRentingSystem.Controllers
                 return View(car);
             }
 
-            if (!this.cars.IsByDealer(id, dealerId))
+            if (!this.cars.IsByDealer(id, dealerId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
