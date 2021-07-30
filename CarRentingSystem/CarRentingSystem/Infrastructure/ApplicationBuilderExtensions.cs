@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CarRentingSystem.Data;
 using CarRentingSystem.Data.Models;
 
-using static CarRentingSystem.WebConstants;
+using static CarRentingSystem.Areas.Admin.AdminConstants;
 
 namespace CarRentingSystem.Infrastructure
 {

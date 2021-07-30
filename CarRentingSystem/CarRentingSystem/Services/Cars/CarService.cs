@@ -4,14 +4,22 @@ using System.Collections.Generic;
 using CarRentingSystem.Data;
 using CarRentingSystem.Models;
 using CarRentingSystem.Data.Models;
+using CarRentingSystem.Services.Cars.Models;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
 
 namespace CarRentingSystem.Services.Cars
 {
     public class CarService : ICarService
     {
         private readonly CarRentingDbContext context;
+        private readonly IMapper mapper;
 
-        public CarService(CarRentingDbContext context) => this.context = context;
+        public CarService(CarRentingDbContext context, IMapper mapper)
+        {
+            this.context = context;
+            this.mapper = mapper;
+        }
 
         public CarQueryServiceModel All(
             string brand,
@@ -68,19 +76,7 @@ namespace CarRentingSystem.Services.Cars
             => this.context
                    .Cars
                    .Where(c => c.Id == carId)
-                   .Select(c => new CarDetailsServiceModel
-                   {
-                       Id = c.Id,
-                       Brand = c.Brand,
-                       Model = c.Model,
-                       Description = c.Description,
-                       Year = c.Year,
-                       ImageUrl = c.ImageUrl,
-                       CategoryName = c.Category.Name,
-                       DealerId = c.DealerId,
-                       DealerName = c.Dealer.Name,
-                       UserId = c.Dealer.UserId
-                   })
+                   .ProjectTo<CarDetailsServiceModel>(this.mapper.ConfigurationProvider)
                    .FirstOrDefault();
 
         public int Create(string brand, string model,
@@ -170,6 +166,6 @@ namespace CarRentingSystem.Services.Cars
                 ImageUrl = c.ImageUrl,
                 CategoryName = c.Category.Name
             })
-                        .ToList();
+            .ToList();
     }
 }

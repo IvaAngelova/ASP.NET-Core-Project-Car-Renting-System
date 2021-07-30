@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using CarRentingSystem.Models;
+using CarRentingSystem.Services.Cars.Models;
 
 namespace CarRentingSystem.Services.Cars
 {

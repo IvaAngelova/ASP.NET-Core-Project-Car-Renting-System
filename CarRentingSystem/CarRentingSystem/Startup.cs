@@ -41,6 +41,8 @@ namespace CarRentingSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CarRentingDbContext>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
@@ -76,9 +78,8 @@ namespace CarRentingSystem
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultAreaRoute();
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
         }

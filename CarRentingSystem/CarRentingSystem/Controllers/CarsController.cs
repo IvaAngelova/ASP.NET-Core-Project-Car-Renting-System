@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using CarRentingSystem.Models.Cars;
@@ -6,17 +8,20 @@ using CarRentingSystem.Services.Cars;
 using CarRentingSystem.Infrastructure;
 using CarRentingSystem.Services.Dealers;
 
-using static CarRentingSystem.WebConstants;
+using static CarRentingSystem.Areas.Admin.AdminConstants;
 
 namespace CarRentingSystem.Controllers
 {
     public class CarsController : Controller
     {
+        private readonly IMapper mapper;
         private readonly ICarService cars;
         private readonly IDealerService dealers;
 
-        public CarsController(ICarService cars, IDealerService dealers)
+        public CarsController(IMapper mapper, ICarService cars, 
+            IDealerService dealers)
         {
+            this.mapper = mapper;
             this.cars = cars;
             this.dealers = dealers;
         }
@@ -108,16 +113,11 @@ namespace CarRentingSystem.Controllers
                 return Unauthorized();
             }
 
-            return View(new CarFormModel
-            {
-                Brand = car.Brand,
-                Model = car.Model,
-                Description = car.Description,
-                ImageUrl = car.ImageUrl,
-                Year = car.Year,
-                CategoryId = car.CategoryId,
-                Categories = this.cars.AllCategories()
-            });
+            var carForm = this.mapper.Map<CarFormModel>(car);
+
+            carForm.Categories = this.cars.AllCategories();
+
+            return View(carForm);
         }
 
         [HttpPost]

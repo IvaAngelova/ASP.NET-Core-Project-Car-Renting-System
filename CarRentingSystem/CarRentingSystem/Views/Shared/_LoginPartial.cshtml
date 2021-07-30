@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using CarRentingSystem.Services.Dealers
 
+@using CarRentingSystem.Areas.Admin;
+
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @inject IDealerService Dealers
@@ -10,7 +12,7 @@
     {
         var userId = User.Id();
         var userIsDealer = Dealers.IsDealer(userId);
-        var userIsAdmin = User.IsInRole(AdministratorRoleName);
+        var userIsAdmin = User.IsInRole(AdminConstants.AdministratorRoleName);
 
         @if (userIsDealer && !userIsAdmin)
         {
@@ -18,7 +20,7 @@
                 <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Mine">My Cars</a>
             </li>
         }
-        else if(!userIsAdmin)
+        else if (!userIsAdmin)
         {
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Dealers" asp-action="Become">Become Dealer</a>

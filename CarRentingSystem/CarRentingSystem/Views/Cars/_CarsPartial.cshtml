@@ -1,4 +1,6 @@
-﻿@model IEnumerable<CarServiceModel>
+﻿@using CarRentingSystem.Areas.Admin; 
+
+@model IEnumerable<CarServiceModel>
 
 <div class="row">
     @foreach (var car in Model)
@@ -9,7 +11,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@car.Year @car.Brand @car.Model (@car.CategoryName)</h5>
                     <a asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id" class="btn btn-primary">View</a>
-                    @if (ViewBag.AllowCarEdit == true || User.IsInRole(AdministratorRoleName))
+                    @if (ViewBag.AllowCarEdit == true || User.IsInRole(AdminConstants.AdministratorRoleName))
                     {
                         <a asp-controller="Cars" asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning">Edit</a>
                         <a asp-controller="Cars" asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger">Delete</a>
