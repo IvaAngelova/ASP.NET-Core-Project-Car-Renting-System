@@ -11,7 +11,7 @@ namespace CarRentingSystem.Infrastructure
     {
         public MappingProfile()
         {
-            this.CreateMap<Car, CarIndexViewModel>();
+            this.CreateMap<Car, LatestCarServiceModel>();
             this.CreateMap<CarDetailsServiceModel, CarFormModel>();
 
             this.CreateMap<Car, CarDetailsServiceModel>()

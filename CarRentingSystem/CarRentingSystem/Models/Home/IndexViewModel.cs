@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using CarRentingSystem.Services.Cars.Models;
+
 namespace CarRentingSystem.Models.Home
 {
     public class IndexViewModel
@@ -10,6 +12,6 @@ namespace CarRentingSystem.Models.Home
         
         public int TotalRents { get; init; }
 
-        public List<CarIndexViewModel> Cars { get; set; }
+        public IList<LatestCarServiceModel> Cars { get; set; }
     }
 }

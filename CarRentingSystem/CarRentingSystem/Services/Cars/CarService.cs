@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
+using AutoMapper;
 using CarRentingSystem.Data;
 using CarRentingSystem.Models;
 using CarRentingSystem.Data.Models;
-using CarRentingSystem.Services.Cars.Models;
 using AutoMapper.QueryableExtensions;
-using AutoMapper;
+using CarRentingSystem.Services.Cars.Models;
 
 namespace CarRentingSystem.Services.Cars
 {
@@ -71,6 +71,14 @@ namespace CarRentingSystem.Services.Cars
                 Cars = cars
             };
         }
+
+        public IEnumerable<LatestCarServiceModel> Latest()
+            => this.context
+                .Cars
+                .OrderByDescending(c => c.Id)
+                .ProjectTo<LatestCarServiceModel>(this.mapper.ConfigurationProvider)
+                .Take(3)
+                .ToList();
 
         public CarDetailsServiceModel Details(int carId)
             => this.context
