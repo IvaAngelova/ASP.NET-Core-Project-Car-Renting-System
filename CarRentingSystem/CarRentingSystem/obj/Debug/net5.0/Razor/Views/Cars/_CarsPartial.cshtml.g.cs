@@ -35,34 +35,27 @@ using CarRentingSystem.Models.Cars;
 #nullable disable
 #nullable restore
 #line 4 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
-using CarRentingSystem.Models.Home;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 5 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
 using CarRentingSystem.Data.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
+#line 5 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
 using CarRentingSystem.Models.Dealers;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
+#line 6 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
 using CarRentingSystem.Infrastructure;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
+#line 7 "D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\Views\_ViewImports.cshtml"
 using CarRentingSystem.Services.Cars.Models;
 
 #line default
@@ -76,7 +69,7 @@ using CarRentingSystem.Areas.Admin;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a64de0e296b586d17ff4c2b05d362a1c356f9f20", @"/Views/Cars/_CarsPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5eb839ed5d14eb62b5a34a50562612572016ca9f", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d200bb615505897874a0a43a4f5614cf621f33d5", @"/Views/_ViewImports.cshtml")]
     public class Views_Cars__CarsPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<CarServiceModel>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Cars", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -196,7 +189,7 @@ WriteAttributeValue("", 310, car.CategoryName, 310, 17, false);
 #line hidden
 #nullable disable
             WriteLiteral(")</h5>\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a64de0e296b586d17ff4c2b05d362a1c356f9f2011077", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a64de0e296b586d17ff4c2b05d362a1c356f9f2010829", async() => {
                 WriteLiteral("View");
             }
             );
@@ -239,7 +232,7 @@ WriteAttributeValue("", 310, car.CategoryName, 310, 17, false);
 #line hidden
 #nullable disable
             WriteLiteral("                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a64de0e296b586d17ff4c2b05d362a1c356f9f2014004", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a64de0e296b586d17ff4c2b05d362a1c356f9f2013756", async() => {
                 WriteLiteral("Edit");
             }
             );
@@ -273,7 +266,7 @@ WriteAttributeValue("", 310, car.CategoryName, 310, 17, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a64de0e296b586d17ff4c2b05d362a1c356f9f2016550", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a64de0e296b586d17ff4c2b05d362a1c356f9f2016302", async() => {
                 WriteLiteral("Delete");
             }
             );
