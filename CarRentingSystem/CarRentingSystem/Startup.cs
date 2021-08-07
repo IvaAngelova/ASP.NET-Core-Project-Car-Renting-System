@@ -10,9 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using CarRentingSystem.Data;
 using CarRentingSystem.Data.Models;
 using CarRentingSystem.Services.Cars;
-using CarRentingSystem.Infrastructure;
 using CarRentingSystem.Services.Dealers;
 using CarRentingSystem.Services.Statistics;
+using CarRentingSystem.Infrastructure.Extensions;
 
 namespace CarRentingSystem
 {
@@ -81,6 +81,12 @@ namespace CarRentingSystem
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultAreaRoute();
+
+                endpoints.MapControllerRoute(
+                    name: "Car Details",
+                    pattern: "/Cars/Details/{id}/{information}",
+                    defaults: new { controller = "Cars", action = "Details"});
+
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });

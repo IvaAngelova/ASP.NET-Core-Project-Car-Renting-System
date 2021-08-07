@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5pLVECkJU7jOBuUA1X9cd25mPvwTbM8yaTymgugoSC50plUH+vOunF9yBcCxSt2riajyBqk9EOHjdOvuKOd6Hw==",
+  "dgSpecHash": "EJrVc6rIg4gokCOiS9iCXfePAOFGX8coc2sdjjepQnUdtcDMZv0hlzA4GgOxkJFvBc60oo5HhQK+CdgAYeYlmQ==",
   "success": true,
   "projectFilePath": "D:\\SoftUni\\C# Web\\ASP.NET Core\\ASP.NET-Core-Project-Car-Renting-System\\CarRentingSystem\\CarRentingSystem.Test\\CarRentingSystem.Test.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\coverlet.collector\\1.3.0\\coverlet.collector.1.3.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\fluentassertions\\5.10.3\\fluentassertions.5.10.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.8\\microsoft.aspnetcore.cryptography.internal.5.0.8.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.8\\microsoft.aspnetcore.cryptography.keyderivation.5.0.8.nupkg.sha512",

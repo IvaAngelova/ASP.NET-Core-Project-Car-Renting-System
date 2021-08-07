@@ -2,11 +2,13 @@
 
 using CarRentingSystem.Data;
 using CarRentingSystem.Data.Models;
-using CarRentingSystem.Infrastructure;
+using CarRentingSystem.Infrastructure.Extensions;
 using CarRentingSystem.Models.Dealers;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+
+using static CarRentingSystem.WebConstants;
 
 namespace CarRentingSystem.Controllers
 {
@@ -51,6 +53,8 @@ namespace CarRentingSystem.Controllers
 
             this.context.Dealers.Add(dealerData);
             this.context.SaveChanges();
+
+            TempData[GlobalMessageKey] = "Thank you for becamming a dealer";
 
             return RedirectToAction("All", "Cars");
         }

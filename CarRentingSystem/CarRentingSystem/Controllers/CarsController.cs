@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 
 using CarRentingSystem.Models.Cars;
 using CarRentingSystem.Services.Cars;
-using CarRentingSystem.Infrastructure;
+using CarRentingSystem.Infrastructure.Extensions;
 using CarRentingSystem.Services.Dealers;
 
 using static CarRentingSystem.Areas.Admin.AdminConstants;
+using static CarRentingSystem.WebConstants;
 
 namespace CarRentingSystem.Controllers
 {
@@ -18,7 +19,7 @@ namespace CarRentingSystem.Controllers
         private readonly ICarService cars;
         private readonly IDealerService dealers;
 
-        public CarsController(IMapper mapper, ICarService cars, 
+        public CarsController(IMapper mapper, ICarService cars,
             IDealerService dealers)
         {
             this.mapper = mapper;
@@ -63,10 +64,12 @@ namespace CarRentingSystem.Controllers
                 return View(car);
             }
 
-            this.cars.Create(car.Brand, car.Model, car.Description,
-                car.ImageUrl, car.Year, car.CategoryId, dealerId);
+            var carId = this.cars.Create(car.Brand, car.Model, car.Description,
+                 car.ImageUrl, car.Year, car.CategoryId, dealerId);
 
-            return RedirectToAction(nameof(All));
+            TempData[GlobalMessageKey] = "Your car was added and it is awaiting for approval!";
+
+            return RedirectToAction(nameof(Details), new { id = carId, information = car.GetInformation() });
         }
 
         [Authorize]
@@ -76,6 +79,18 @@ namespace CarRentingSystem.Controllers
                 .ByUser(this.User.Id());
 
             return View(myCars);
+        }
+
+        public IActionResult Details(int id, string information)
+        {
+            var car = this.cars.Details(id);
+
+            if (information != car.GetInformation())
+            {
+                return BadRequest();
+            }
+
+            return View(car);
         }
 
         public IActionResult All([FromQuery] AllCarsQueryModel query)
@@ -147,12 +162,13 @@ namespace CarRentingSystem.Controllers
             {
                 return BadRequest();
             }
-
+            
             this.cars.Edit(id, car.Brand, car.Model, car.Description,
-                 car.ImageUrl, car.Year, car.CategoryId);
+                 car.ImageUrl, car.Year, car.CategoryId, this.User.IsAdmin());
 
+            TempData[GlobalMessageKey] = $"Your car was edited{(this.User.IsAdmin() ? string.Empty : "and it is awaiting for approval")!}";
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Details), new { id, information = car.GetInformation() });
         }
     }
 }

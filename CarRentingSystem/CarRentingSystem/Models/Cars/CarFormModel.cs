@@ -7,7 +7,7 @@ using static CarRentingSystem.Data.DataConstants.Car;
 
 namespace CarRentingSystem.Models.Cars
 {
-    public class CarFormModel
+    public class CarFormModel : ICarModel
     {
         [Required]
         [StringLength(BrandMaxLength, MinimumLength = BrandMinLength)]

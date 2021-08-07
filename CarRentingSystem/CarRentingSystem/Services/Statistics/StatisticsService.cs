@@ -14,7 +14,7 @@ namespace CarRentingSystem.Services.Statistics
         {
             var totalCars = this.context
                    .Cars
-                   .Count();
+                   .Count(c => c.IsPublic);
 
             var totalUsers = this.context
                 .Users
