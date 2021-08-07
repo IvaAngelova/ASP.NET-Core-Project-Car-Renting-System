@@ -8,6 +8,8 @@ using Microsoft.Extensions.Caching.Memory;
 using CarRentingSystem.Services.Cars;
 using CarRentingSystem.Services.Cars.Models;
 
+using static CarRentingSystem.WebConstants.Cache;
+
 namespace CarRentingSystem.Controllers
 {
     public class HomeController : Controller
@@ -23,9 +25,7 @@ namespace CarRentingSystem.Controllers
 
         public IActionResult Index()
         {
-            const string latestCarsCacheKey = "LatestCarsCacheKey";
-
-            var latestCars = this.cache.Get<List<LatestCarServiceModel>>(latestCarsCacheKey);
+            var latestCars = this.cache.Get<List<LatestCarServiceModel>>(LatestCarsCacheKey);
 
             if (latestCars == null)
             {
@@ -36,8 +36,9 @@ namespace CarRentingSystem.Controllers
                 var cacheOptions = new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
 
-                this.cache.Set(latestCarsCacheKey, latestCars, cacheOptions);
+                this.cache.Set(LatestCarsCacheKey, latestCars, cacheOptions);
             }
+
             return View(latestCars);
         }
 

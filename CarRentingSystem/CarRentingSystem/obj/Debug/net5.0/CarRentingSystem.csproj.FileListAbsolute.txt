@@ -452,3 +452,4 @@ D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentin
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\obj\Debug\net5.0\ref\CarRentingSystem.dll
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\obj\Debug\net5.0\CarRentingSystem.pdb
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\obj\Debug\net5.0\CarRentingSystem.genruntimeconfig.cache
+D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem\obj\Debug\net5.0\CarRentingSystem.csprojAssemblyReference.cache

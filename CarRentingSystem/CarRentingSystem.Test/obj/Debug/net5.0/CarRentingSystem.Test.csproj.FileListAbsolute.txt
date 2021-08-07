@@ -6,7 +6,6 @@ D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentin
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\CarRentingSystem.runtimeconfig.dev.json
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\appsettings.Development.json
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\appsettings.json
-D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\CarRentingSystem.StaticWebAssets.xml
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\CarRentingSystem.exe
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\testhost.exe
 D:\SoftUni\C# Web\ASP.NET Core\ASP.NET-Core-Project-Car-Renting-System\CarRentingSystem\CarRentingSystem.Test\bin\Debug\net5.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll

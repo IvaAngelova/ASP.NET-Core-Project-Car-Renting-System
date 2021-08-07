@@ -163,8 +163,13 @@ namespace CarRentingSystem.Controllers
                 return BadRequest();
             }
             
-            this.cars.Edit(id, car.Brand, car.Model, car.Description,
+            var edited = this.cars.Edit(id, car.Brand, car.Model, car.Description,
                  car.ImageUrl, car.Year, car.CategoryId, this.User.IsAdmin());
+
+            if (!edited)
+            {
+                return BadRequest();
+            }
 
             TempData[GlobalMessageKey] = $"Your car was edited{(this.User.IsAdmin() ? string.Empty : "and it is awaiting for approval")!}";
 
